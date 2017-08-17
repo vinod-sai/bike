@@ -1,0 +1,53 @@
+<div class="ajaxTable">
+<div class="col-xs-12 table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+      <th><a href="javascript:void(0)" onclick='pagination("/pagination?page={{currentPage}}&limit={{limit}}&sortBy=Name")'>Student Name</a></th>
+      <th><a href="javascript:void(0)" onclick='pagination("/pagination?page={{currentPage}}&limit={{limit}}&sortBy=RollNo")'>Roll No</a></th>
+      <th><a href="javascript:void(0)" onclick='pagination("/pagination?page={{currentPage}}&limit={{limit}}&sortBy=Address")'>Address</a></th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for studentDetails in data %}
+      <tr>
+          <td>
+            <input type="text" readonly="true" name="Name" value="{{ studentDetails.Name }}"  ondblclick="this.readOnly='';" onchange="updateStudentAjax(this)" class="{{studentDetails.ID}}" studentId="{{studentDetails.ID}}" />
+          </td>
+          <td>
+            <input type="number" readonly="true" name="RollNo" value="{{ studentDetails.RollNo }}"  ondblclick="this.readOnly='';" onchange="updateStudentAjax(this)" class="{{studentDetails.ID}}" studentId="{{studentDetails.ID}}" />
+          </td>
+          <td>
+            <input type="text" readonly="true" name="Address" value="{{ studentDetails.Address }}" ondblclick="this.readOnly='';" onchange="updateStudentAjax(this)" class="{{studentDetails.ID}}" studentId="{{studentDetails.ID}}" />
+          </td>
+          <td>
+            <input type="hidden" class="{{studentDetails.ID}}" name="studentId" value="{{studentDetails.ID}}" />
+            <i class=" fa fa-pencil " aria-hidden="true" id="{{studentDetails.ID}}" studentId="{{studentDetails.ID}}" onclick="editStudent(this)" ></i>
+            <i class="fa fa-times" aria-hidden="true" studentId="{{studentDetails.ID}}" onClick="deleteStudentAjax(this)"></i>
+          </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+  </div>
+<div class="text-center">
+  <ul class="pagination text-center">
+    {% if currentPage-1 > 0 %}
+      <li>
+      <a href="javasript:void(0)" onclick="pagination('/pagination?page={{currentPage-1}}&limit={{limit}}&sortBy={{sortBy}}')">prev</a>
+      </li>
+    {% endif %}
+    {% for i in 1 .. totalPages %}
+      <li class="{% if i==currentPage %} active {% endif %}" >
+        <a href="javascript:void(0)" onclick="pagination('/pagination?page={{i}}&limit={{limit}}&sortBy={{sortBy}}')" >{{i}}</a>
+      </li>
+    {% endfor %}
+    {% if currentPage+1 <= totalPages %}
+      <li>
+        <a href="javascript:void(0)" onclick="pagination('/pagination?page={{currentPage+1}}&limit={{limit}}&sortBy={{sortBy}}')">next</a>
+      </li>
+    {% endif %}
+  </ul>
+</div>
+</div>

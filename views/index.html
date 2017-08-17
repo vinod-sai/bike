@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="view-port" content="width=device-width, intial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel='stylesheet' href='/stylesheets/style.css'>
+  <script src="/javascripts/script.js"></script>
+</head>
+<body onload="searchQuery()">
+  <div class="container">
+    <div class="row">
+    <h1>{{title}}</h1>
+      <div class="col-md-12 col-xs-12">
+          <div class="col-xs-2  col-xs-offset-10">
+              <select name="limit" id="limit" form="submitForm" onchange="this.form.submit();">
+                <option value="5">5 Students</option>
+                <option value="10">10 Students</option>
+                <option value="15">15 Students</option>
+              </select>
+          </div>
+          <div class="ajaxTable">
+          <div class="col-xs-12 table-responsive">
+            <table class="table  table-striped table-hover">
+              <thead>
+                <tr>
+                  <th><a href="javascript:void(0)" onclick='pagination("/pagination?page={{currentPage}}&limit={{limit}}&sortBy=Name")'>Student Name</a></th>
+                  <th><a href="javascript:void(0)" onclick='pagination("/pagination?page={{currentPage}}&limit={{limit}}&sortBy=RollNo")'>Roll No</a></th>
+                  <th><a href="javascript:void(0)" onclick='pagination("/pagination?page={{currentPage}}&limit={{limit}}&sortBy=Address")'>Address</a></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody">
+
+              </tbody>
+              </table>
+            </div>
+          <div class="text-center">
+            <ul class="pagination text-center">
+
+            </ul>
+          </div>
+          </div>
+          <p><button class="btn btn-primary" data-toggle="modal" data-target="#addStudent" >Add Student</button><p>
+
+          <form id="submitForm">
+
+            <input type=hidden name="page" id="page" value="">
+            <input type=hidden name="sortBy" id="sortBy" value="">
+          </form>
+      </div>
+    </div>
+  </div>
+
+<!--modals-->
+  <div id="addStudent" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h1>Add Student Details</h1>
+        </div>
+        <div class="container-fluid">
+        <div class="row">
+        <div class="col-sm-12">
+        <div class="modal-body">
+        <form class="form-horizontal" onsubmit="return false" id="addStudentForm" action="#" >
+          <div class="form-group">
+            <label class="control-label col-sm-2" for ="Name">Name </label>
+            <div class=" col-sm-10">
+              <input name="Name" type="text" class="form-control" required  />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2 for="RollNo">Roll No </label>
+            <div class=" col-sm-10">
+              <input name="RollNo" type="number" class="form-control" required  />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2 for="Address"> Address </label>
+            <div class=" col-sm-10">
+              <input name="Address" type="text" class="form-control" required />
+            </div>
+          </div>
+          <div class="col-md-3 col-md-offset-4">
+
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default"type="submit" data-dismiss="modal" >Cancel</button>
+          <button class="btn btn-primary"type="submit" form="addStudentForm" type="submit" onclick="addStudent(this)">Add Student</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--edit modal-->
+  <div class="modal fade" id="editStudentModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Edit Student</h1>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" onsubmit="return false" id="editStudentForm" action="#" >
+            <div class="form-group">
+              <label class="control-label col-sm-2" for ="Name">Name </label>
+              <div class=" col-sm-10">
+                <input name="Name" type="text" class="form-control updateForm" required  />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2 for="RollNo">Roll No </label>
+              <div class=" col-sm-10">
+                <input name="RollNo" type="number" class="form-control updateForm" required  />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2 for="Address"> Address </label>
+              <div class=" col-sm-10">
+                <input name="Address" type="text" class="form-control updateForm" required />
+              </div>
+            </div>
+            <input name="studentId" type="hidden" class="updateForm" sudentId="" required />
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" type="submit" data-dismiss="modal" >Cancel</button>
+          <button class="btn btn-primary" type="submit" form="editStudentForm" type="submit" onclick="updateStudentAjax(this)" id="update">Update Student</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
